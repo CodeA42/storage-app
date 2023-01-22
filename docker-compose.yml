@@ -22,7 +22,20 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
     volumes:
       - db-data:/var/lib/postgresql/data
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin1234
+    ports:
+      - '${PG_ADMIN_PORT-5050}:80'
+    restart: always
+    volumes:
+      - pgadmin:/root/.pgadmin
+    logging:
+      driver: none
 volumes:
+  pgadmin:
   node-modules-mount:
   db-data:
   dist-mount:
