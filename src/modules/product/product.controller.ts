@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   HttpCode,
   ParseUUIDPipe,
   Post,
@@ -14,6 +16,7 @@ import { authType } from "src/modules/authentication/types/authentication.types"
 import Product from "./entities/product.entity";
 import { CreateProductDto } from "./types/product.types";
 import { ProductService } from "./product.service";
+import { DeleteResult } from "typeorm";
 
 @Controller("product")
 @UseGuards(AuthenticationGuard)
@@ -33,13 +36,15 @@ export class ProductController {
     return this.productService.updateProduct(product);
   }
 
-  @Put("/")
+  @Delete("/")
   @Authentication(authType.accessToken)
-  async deleteProduct(@User("id", ParseUUIDPipe) productId: string) {
+  async deleteProduct(
+    @User("id", ParseUUIDPipe) productId: string
+  ): Promise<DeleteResult> {
     return this.productService.deleteProduct(productId);
   }
 
-  @Put("/")
+  @Get("/")
   @Authentication(authType.accessToken)
   async getProduct(@User("id", ParseUUIDPipe) productId: string) {
     return this.productService.getProduct(productId);
