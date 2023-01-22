@@ -54,4 +54,6 @@ export enum ProductOrderBy {
   salePrice = "product.salePrice",
   count = "product.count",
   category = "product.category",
+  updatedAt = "product.updatedAt",
+  createAd = "product.createAd",
 }
