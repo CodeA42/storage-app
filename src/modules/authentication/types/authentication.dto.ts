@@ -28,8 +28,8 @@ export class UserAuthDto {
 
   @ApiProperty({
     description:
-      "Minimum allowed password length is 8 characters. The password must contain at least one number and letter. Special characters allowed. The regex /^(?=.*[A-Za-z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{8,}$/",
-    example: "ohhimark123",
+      "Password must be between 6 and 20 characters long contain at least one letter and number and one symbol",
+    example: "ohhimark123_",
   })
   @IsNotEmpty()
   @MinLength(8)
