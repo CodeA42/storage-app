@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   api:
-    image: 'coursework-1901321002'
+    image: 'coursework-1901321002-storage-app'
     build: .
     command: sh ./commands/${ENTRY_POINT}.entrypoint.sh
     ports:
