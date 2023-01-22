@@ -1,8 +1,15 @@
 import { Inject, Injectable } from "@nestjs/common";
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from "nestjs-typeorm-paginate";
 import { DatabaseKeys } from "src/@types/app.types";
+import { SortOrder } from "src/utils/types";
 import { Repository } from "typeorm";
 import Product from "./entities/product.entity";
 import { ProductNotFoundError } from "./types/product.errors";
+import { ProductOrderBy } from "./types/product.types";
 
 @Injectable()
 export class ProductRepository extends Repository<Product> {
@@ -18,5 +25,15 @@ export class ProductRepository extends Repository<Product> {
     });
     if (product) return product;
     throw new ProductNotFoundError();
+  }
+
+  paginate(
+    paginationOptions: IPaginationOptions = { page: 0, limit: 10 },
+    orderBy: ProductOrderBy = ProductOrderBy.name,
+    order: SortOrder = "ASC"
+  ): Promise<Pagination<Product>> {
+    const query = this.createQueryBuilder("product").orderBy(orderBy, order);
+
+    return paginate(query, paginationOptions);
   }
 }

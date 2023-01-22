@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
+import { IPaginationOptions, Pagination } from "nestjs-typeorm-paginate";
+import { SortOrder } from "src/utils/types";
 import { DeleteResult } from "typeorm";
 import Product from "./entities/product.entity";
 import { ProductRepository } from "./product.repository";
-import { CreateProductDto } from "./types/product.types";
+import { CreateProductDto, ProductOrderBy } from "./types/product.types";
 
 @Injectable()
 export class ProductService {
@@ -24,7 +26,11 @@ export class ProductService {
     return this.productRepository.delete(id);
   }
 
-  getProducts(): Promise<Product[]> {
-    throw new Error("Method not implemented.");
+  getProducts(
+    paginationOptions: IPaginationOptions = { page: 1, limit: 10 },
+    orderBy: ProductOrderBy = ProductOrderBy.name,
+    order: SortOrder = "ASC"
+  ): Promise<Pagination<Product>> {
+    return this.productRepository.paginate(paginationOptions, orderBy, order);
   }
 }
