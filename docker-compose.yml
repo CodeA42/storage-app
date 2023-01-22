@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  api:
+    image: 'coursework-1901321002'
+    build: .
+    command: sh ./commands/${ENTRY_POINT}.entrypoint.sh
+    ports:
+      - ${SERVER_PORT-3456}:${SERVER_PORT}
+    depends_on:
+      - db
+    volumes:
+      - ./src:/src
+      - node-modules-mount:/node_modules
+      - dist-mount:/dist
+    environment:
+      - ENV_FILE_PATH
+  db:
+    image: 'postgres:14.4'
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  node-modules-mount:
+  db-data:
+  dist-mount:
+
