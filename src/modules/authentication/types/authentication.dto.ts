@@ -34,10 +34,13 @@ export class UserAuthDto {
   @IsNotEmpty()
   @MinLength(8)
   @IsString()
-  @Matches(/^(?=.*[A-Za-z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/, {
-    message:
-      "Password must be 8 characters long contain at least one letter and number",
-  })
+  @Matches(
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.[@,-,_,~,|])[a-zA-Z\d\w]{6,20}$/,
+    {
+      message:
+        "Password must be between 6 and 20 characters long contain at least one letter and number and one symbol",
+    }
+  )
   password: string;
 
   @ApiProperty({
