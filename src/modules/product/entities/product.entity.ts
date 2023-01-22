@@ -1,5 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { ProductCategory } from "../types/product.types";
 
 @Entity()
@@ -52,4 +58,12 @@ export default class Product {
     type: "text",
   })
   category: ProductCategory;
+
+  @ApiProperty()
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt!: Date;
+
+  @ApiProperty()
+  @UpdateDateColumn({ type: "timestamp" })
+  updatedAt!: Date;
 }
