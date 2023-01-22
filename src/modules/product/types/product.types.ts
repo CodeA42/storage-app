@@ -47,3 +47,11 @@ export class CreateProductDto {
   @IsNotEmpty()
   category: ProductCategory;
 }
+
+export enum ProductOrderBy {
+  name = "product.name",
+  purchasePrice = "product.purchasePrice",
+  salePrice = "product.salePrice",
+  count = "product.count",
+  category = "product.category",
+}
